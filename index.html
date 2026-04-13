@@ -983,29 +983,13 @@
         padding: 52px 0;
       }
 
-      .reviews {
-        overflow-x: hidden;
-      }
-
       .reviews-grid {
-        display: flex;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
+        grid-template-columns: 1fr;
         gap: 16px;
-        margin: 0 -24px;
-        padding: 0 24px 16px;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-      }
-
-      .reviews-grid::-webkit-scrollbar {
-        display: none;
       }
 
       .review-card {
-        scroll-snap-align: start;
-        min-width: calc(85vw);
-        flex-shrink: 0;
+        min-width: unset;
       }
 
       .steps-row {
