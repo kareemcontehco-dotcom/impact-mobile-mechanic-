@@ -297,7 +297,8 @@
     }
 
     .typewriter-word {
-      transition: opacity 0.3s ease;
+      display: inline-block;
+      transition: opacity 0.2s ease, transform 0.2s ease;
     }
 
     .typewriter-cursor {
@@ -1827,20 +1828,32 @@
     const wordEl = document.getElementById('typewriter-word');
 
     function cycleWord() {
-      // Fade out
+      // Slide up + fade out
       wordEl.style.opacity = '0';
+      wordEl.style.transform = 'translateY(-10px)';
 
       setTimeout(() => {
+        // Snap new word in from below (no transition)
+        wordEl.style.transition = 'none';
         currentIndex = (currentIndex + 1) % words.length;
         wordEl.textContent = words[currentIndex];
-        // Fade in
-        wordEl.style.opacity = '1';
-      }, 300);
+        wordEl.style.transform = 'translateY(10px)';
+
+        // Double rAF ensures the snap paints before the slide-in starts
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            wordEl.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+            wordEl.style.opacity = '1';
+            wordEl.style.transform = 'translateY(0)';
+          });
+        });
+      }, 220);
     }
 
-    // Initial state visible
+    // Initial state
     wordEl.style.opacity = '1';
-    wordEl.style.transition = 'opacity 0.3s ease';
+    wordEl.style.transform = 'translateY(0)';
+    wordEl.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
 
     setInterval(cycleWord, 2500);
 
